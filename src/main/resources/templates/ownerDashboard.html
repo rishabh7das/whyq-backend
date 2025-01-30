@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Owner Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand fw-bold logo-bold"  href="#">Why_Q</a>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <!-- <li class="nav-item">
+                    <a class="nav-link text-light" href="index.html">Home</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="salonProfile.html">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="mailto:help@WhyQ.com">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="about.html" target="_blank">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/logout">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="container mt-5 flex-grow-1">
+        <h2 class="text-center mb-4">Salon Queue Dashboard</h2>
+        <h3>Hi, <span th:text="${session.ownerName}"></span> Welcome</h3>
+        <div class="row">
+            <!-- Queue Summary -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Current Queue</h4>
+                        <p class="card-text">Total Customers in Queue: <strong id="queue-count">0</strong></p>
+                        <ul class="list-group" id="queue-list">
+                            <!-- <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">Jane Smith</li>
+                            <li class="list-group-item">Michael Johnson</li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Queue -->
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Manage Queue</h4>
+                        <form id="add-to-queue-form" class="mb-3">
+                            <div class="form-group">
+                                <label for="customer-name">Add Walk-in Customer</label>
+                                <input type="text" class="form-control" id="customer-name" placeholder="Enter customer name" required>
+                            </div>
+                            <button  type="submit" class="btn btn-dark btn-block">Add to Queue</button>
+                        </form>
+                        <button class="btn btn-danger btn-block" id="serve-next">Serve Next Customer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white text-center py-2">
+        <p>&copy; 2024 Why_Q. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/ownerDashboard.js">
+        // JavaScript for dynamic queue management
+        
+    </script>
+</body>
+</html>

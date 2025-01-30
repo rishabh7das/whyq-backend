@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Owner Registration - Why_Q</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand fw-bold logo-bold" href="#">Why_Q</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link text-light" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="login.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Salon Owner Registration</h2>
+        <div id="successMessage" class="alert alert-success d-none">Registration successful!</div>
+
+        <form id="salonOwnerForm" action="/registerSalonOwner" method="POST" class="p-4 border rounded bg-light">
+            <!-- Owner Name -->
+            <div class="form-group">
+                <label for="ownerName">Owner Name</label>
+                <input type="text" class="form-control" id="ownerName" name="ownerName" placeholder="Enter your name" required>
+                <small class="text-danger d-none" id="ownerNameError">Owner Name is required.</small>
+            </div>
+
+            <!-- Email (Used as Primary Key) -->
+            <div class="form-group">
+                <label for="email">Email (Will be used as ID)</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                <small class="text-danger d-none" id="emailError">Enter a valid email.</small>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                <small class="text-danger d-none" id="passwordError">Password must be at least 6 characters.</small>
+            </div>
+
+            <!-- Contact Number -->
+            <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required>
+                <small class="text-danger d-none" id="contactNumberError">Contact must be 10 digits & start with 6-9.</small>
+            </div>
+
+            <!-- Salon Name -->
+            <div class="form-group">
+                <label for="salonName">Salon Name</label>
+                <input type="text" class="form-control" id="salonName" name="salonName" placeholder="Enter salon name" required>
+                <small class="text-danger d-none" id="salonNameError">Salon Name is required.</small>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Salon Address</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Enter salon address" required>
+                <small class="text-danger d-none" id="addressError">Address is required.</small>
+            </div>
+
+            <!-- Pincode -->
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Enter pincode" required>
+                <small class="text-danger d-none" id="pincodeError">Pincode must be 6 digits.</small>
+            </div>
+
+            <!-- Services Dropdown -->
+            <div class="form-group">
+                <label for="services">Services Offered</label>
+                <div class="d-flex">
+                    <select id="servicesDropdown" class="form-control mr-2">
+                        <option value="">Select a service</option>
+                        <option value="1">Haircut</option>
+                        <option value="2">Hair Coloring</option>
+                        <option value="3">Facial</option>
+                        <option value="4">Manicure</option>
+                        <option value="5">Pedicure</option>
+                        <option value="6">Spa</option>
+                        <option value="7">Thai Massage</option>
+                        <option value="8">Head Massage</option>
+                    </select>
+                    <button type="button" class="btn btn-dark" id="addService">Add</button>
+                </div>
+                <div id="selectedServices" class="mt-3"></div>
+                <input type="hidden" id="servicesInput" name="serviceIds">
+                <small class="text-danger d-none" id="serviceError">At least one service must be selected.</small>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-dark btn-block">Register Salon</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Service Selection Logic
+            let selectedServices = [];
+
+            $('#addService').click(function () {
+                const service = $('#servicesDropdown').val();
+                const serviceText = $("#servicesDropdown option:selected").text();
+
+                if (service && !selectedServices.includes(service)) {
+                    selectedServices.push(service);
+                    $("#selectedServices").append(
+                        `<button class="btn btn-dark service-btn m-1" data-service="${service}">
+                            ${serviceText} <span class="remove-btn">&times;</span>
+                        </button>`
+                    );
+                    $('#servicesInput').val(selectedServices.join(','));
+                }
+            });
+
+            $(document).on("click", ".remove-btn", function () {
+                const serviceId = $(this).parent().data("service");
+                selectedServices = selectedServices.filter(s => s !== serviceId);
+                $(this).parent().remove();
+                $('#servicesInput').val(selectedServices.join(','));
+            });
+
+            // Form Validation on Blur
+            $('#ownerName').blur(function () {
+                toggleValidation($(this), $('#ownerNameError'), $(this).val().trim() !== "");
+            });
+
+            $('#email').blur(function () {
+                toggleValidation($(this), $('#emailError'), /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($(this).val().trim()));
+            });
+
+            $('#password').blur(function () {
+                toggleValidation($(this), $('#passwordError'), $(this).val().length >= 6);
+            });
+
+            $('#contactNumber').blur(function () {
+                toggleValidation($(this), $('#contactNumberError'), /^[6-9][0-9]{9}$/.test($(this).val().trim()));
+            });
+
+            $('#pincode').blur(function () {
+                toggleValidation($(this), $('#pincodeError'), /^[0-9]{6}$/.test($(this).val().trim()));
+            });
+
+            function toggleValidation(input, error, condition) {
+                if (condition) {
+                    error.addClass('d-none');
+                } else {
+                    error.removeClass('d-none');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

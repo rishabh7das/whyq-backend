@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Why_Q</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand fw-bold logo-bold" href="#">Why_Q</a>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="mailto:help@WhyQ.com">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="about.html" target="_blank">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="container text-center mt-3 content">
+        <h2 class="mb-4">Login</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-4 mb-4">
+                <div class="card login-card">
+                    <div class="card-body">
+                        <form id="loginForm" method="post" action="/login">
+                            <div class="form-group mt-3">
+                                <label for="role">Login as:</label>
+                                <div>
+                                    <input type="radio" id="user" name="role" value="user" checked>
+                                    <label for="user">User</label>
+                                    <input type="radio" id="salonOwner" name="role" value="salonOwner" class="ml-3">
+                                    <label for="salonOwner">Salon Owner</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="text-left d-block">Email</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
+                                <small class="text-danger d-none" id="emailError">Please enter a valid email address.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-left d-block">Password</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                                <small class="text-danger d-none" id="passwordError">Password must be at least 8 characters long and must include one uppercase,lowercase and a digit.</small>
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-custom mt-3">Login</button>
+                            
+                        </form>
+                        <small class="text-left">Forgot Password ? <a class="text-primary"> Click here</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-white text-center py-2">
+        
+        <p>&copy; 2024 Why_Q. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script src="js/login.js">
+        
+    </script>
+</body>
+
+</html>
