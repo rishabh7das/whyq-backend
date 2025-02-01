@@ -60,4 +60,11 @@ public class SalonOwnerService {
         }
         return null; // Invalid credentials
     }
+    
+    public SalonOwner getByEmailId(String email) {
+    	
+    	SalonOwner owner = salonOwnerRepository.findByEmail(email);
+    	
+    	return owner;
+    }
 }

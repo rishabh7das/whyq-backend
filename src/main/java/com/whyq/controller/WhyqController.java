@@ -13,12 +13,17 @@ import com.whyq.entity.SalonOwner;
 import com.whyq.service.SalonOwnerService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class WhyqController {
 
     @Autowired
     private SalonOwnerService salonOwnerService;
+    
+    
+
 
     @PostMapping("/registerSalonOwner")
     public String registerSalonOwner(@ModelAttribute SalonOwnerDTO salonOwnerDTO,HttpSession session, Model model) {
@@ -40,10 +45,17 @@ public class WhyqController {
     }
     
     @GetMapping("/dashboard")
-    public String ownerDashboard(HttpSession session) {
+    public String ownerDashboard(HttpSession session, Model model) {
         if (session.getAttribute("ownerEmail") == null) {
             return "redirect:/login"; // Redirect to login if session is missing
         }
+        
+        String email = session.getAttribute("ownerEmail").toString();
+        SalonOwner so = salonOwnerService.getByEmailId(email);
+        model.addAttribute("owner", so);
+        System.out.println(so);
+//        session.setAttribute("salonOwner", so);
+        
         return "ownerDashboard"; // Load Dashboard
     }
 
@@ -64,22 +76,27 @@ public class WhyqController {
         return "redirect:/login"; // Redirect to login page
     }
     
+    @GetMapping("/ownerProfile")
+    public String ownerProfile(HttpSession session, Model model) {
+    	if (session.getAttribute("ownerEmail") == null) {
+            return "redirect:/login"; // Redirect to login if session is missing
+        }
+    	String email = session.getAttribute("ownerEmail").toString();
+    	SalonOwner so = salonOwnerService.getByEmailId(email);
+        model.addAttribute("owner", so);
+    	return "salonOwnerProfile";
+    }
     
-//    @PostMapping("/login")
-//    public String loginSalonOwner(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model) {
-//        SalonOwner owner = salonOwnerService.authenticateOwner(loginDTO);
-//
-//        if (owner != null) {
-//            // Store owner info in session
-//            session.setAttribute("ownerEmail", owner.getEmail());
-//            session.setAttribute("ownerName", owner.getOwnerName());
-//
-//            return "redirect:/dashboard"; // Redirect to dashboard
-//        } else {
-//            model.addAttribute("error", "Invalid email or password!");
-//            return "login"; // Reload login page with error message
-//        }
-//    }
+    
+//    about page
+    @GetMapping("/about")
+    public String getAbout() {
+        return "about";
+    }
+    
+    
+    
+
     
     
  // Handle Login Submission
@@ -106,6 +123,9 @@ public class WhyqController {
         model.addAttribute("error", "Invalid email or password!");
         return "login"; // Show login page with error
     }
+    
+    
+    
 }
 
 
@@ -155,4 +175,18 @@ public class WhyqController {
 //
 //}
 
-
+//@PostMapping("/login")
+//public String loginSalonOwner(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model) {
+//  SalonOwner owner = salonOwnerService.authenticateOwner(loginDTO);
+//
+//  if (owner != null) {
+//      // Store owner info in session
+//      session.setAttribute("ownerEmail", owner.getEmail());
+//      session.setAttribute("ownerName", owner.getOwnerName());
+//
+//      return "redirect:/dashboard"; // Redirect to dashboard
+//  } else {
+//      model.addAttribute("error", "Invalid email or password!");
+//      return "login"; // Reload login page with error message
+//  }
+//}

@@ -19,7 +19,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Disable CSRF for testing (Enable in production)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/registerSalonOwner", "/**", "/js/**").permitAll() // Allow unrestricted access
-                .requestMatchers("/owner/dashboard").authenticated() // Require authentication for dashboard
+                .requestMatchers("/dashboard","/ownerProfile").authenticated() // Require authentication for dashboard
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form.disable()); // Disabling default Spring Security login page
