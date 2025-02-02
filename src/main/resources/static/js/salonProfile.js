@@ -145,15 +145,25 @@ $(document).ready(function () {
     });
 
     // Handle Delete Account
-    $("#deleteAccountButton").click(function () {
+    /*$("#deleteAccountButton").click(function () {
         const email = prompt("Please enter your registered email to confirm deletion:");
         if (email === $("#email").val()) {
+			document.getElementById("deleteAccountButton")
             alert("Account deleted successfully.");
             window.location.href = "index.html";
         } else {
             alert("Email does not match!");
         }
-    });
+    });*/
+	
+	$('#deleteAccountButton').on('click', function () {
+	    const email = prompt("Please enter your registered email to confirm deletion:");
+	    if (email === $('#email').val()) {
+	        $('#deleteAccountForm').submit(); // Submits form to backend
+	    } else {
+	        alert("Email does not match!");
+	    }
+	});
 	
 	$('#saveButton').on('click', function () {
 	        // Enable all form fields before submission

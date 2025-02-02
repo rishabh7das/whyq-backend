@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whyq.dto.LoginDTO;
@@ -117,7 +118,7 @@ public class WhyqController {
     
  // Handle Login Submission
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model) {
+    public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model, RedirectAttributes ra) {
     	
     	
 //    	System.out.println("login post method invoked "+ loginDTO);
@@ -128,7 +129,12 @@ public class WhyqController {
             if (owner != null) {
                 session.setAttribute("ownerEmail", owner.getEmail());
                 session.setAttribute("ownerName", owner.getOwnerName());
+//                session.setMaxInactiveInterval(1);
                 return "redirect:/dashboard"; // Redirect Salon Owner to Dashboard
+            }
+            else {
+            	ra.addFlashAttribute("error", "Invalid Credentials");
+            	return "redirect:/login";
             }
         } 
         else {
@@ -145,9 +151,22 @@ public class WhyqController {
             return "login"; // Redirect User to Fetch Salon Page
         }
         
-        model.addAttribute("error", "Invalid email or password!");
-        System.out.println("LOGIN USER ELLE");
-        return "login"; // Show login page with error
+//        model.addAttribute("error", "Invalid email or password!");
+//        System.out.println("LOGIN USER ELLE");
+//        return "login"; // Show login page with error
+    }
+    
+    
+    @PostMapping("/deleteSalonOwner")
+    public String deleteSalonOwner(@RequestParam("email") String email, HttpSession session) {
+        boolean deleted = salonOwnerService.deleteSalonOwnerByEmail(email);
+
+        if (deleted) {
+            session.invalidate(); // Clear session after deletion
+            return "redirect:/login"; // Redirect to login after deletion
+        } else {
+            return "redirect:/ownerProfile?error=Could not delete account"; // Stay on profile page with error message
+        }
     }
     
     

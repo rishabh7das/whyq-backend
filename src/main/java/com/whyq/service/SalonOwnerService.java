@@ -49,12 +49,13 @@ public class SalonOwnerService {
     public SalonOwner authenticateOwner(LoginDTO loginDTO) {
         SalonOwner owner = salonOwnerRepository.findByEmail(loginDTO.getEmail());
         
-        if(passwordEncoder.matches(loginDTO.getPassword(), owner.getPassword())) {
-        	System.out.println("password matched");
-        }else {
-        	System.out.println("not matched");
-        }
-        
+//        if(passwordEncoder.matches(loginDTO.getPassword(), owner.getPassword())) {
+//        	System.out.println("password matched");
+//        }else {
+//        	System.out.println("not matched");
+//        }
+        System.out.println(owner);
+        if(owner == null) return null;
         if (owner != null && passwordEncoder.matches(loginDTO.getPassword(), owner.getPassword())) {
             return owner; // Login successful
         }
@@ -116,5 +117,15 @@ public class SalonOwnerService {
     
     public List<SalonOwner> getSalonsByPincode(String pincode) {
         return salonOwnerRepository.findByPincode(pincode);
+    }
+    
+    
+    
+    public boolean deleteSalonOwnerByEmail(String email) {
+        if (salonOwnerRepository.existsById(email)) {
+            salonOwnerRepository.deleteById(email);
+            return true;
+        }
+        return false;
     }
 }

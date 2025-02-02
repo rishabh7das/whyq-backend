@@ -69,4 +69,11 @@ public class UserController {
 	    System.out.println(salons);
 	    return "fetchSalon"; // Reload the page with salon results
 	}
+	
+	
+	@GetMapping("/Userlogout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Destroy session
+        return "redirect:/login"; // Redirect to login page
+    }
 }
