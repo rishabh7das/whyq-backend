@@ -3,6 +3,9 @@ package com.whyq.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "salon_owners")
 public class SalonOwner {

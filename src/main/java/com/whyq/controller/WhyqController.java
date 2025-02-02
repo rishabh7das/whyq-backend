@@ -6,14 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whyq.dto.LoginDTO;
 import com.whyq.dto.SalonOwnerDTO;
 import com.whyq.entity.SalonOwner;
+import com.whyq.entity.User;
 import com.whyq.service.SalonOwnerService;
+import com.whyq.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -22,7 +24,8 @@ public class WhyqController {
     @Autowired
     private SalonOwnerService salonOwnerService;
     
-    
+    @Autowired
+    private UserService userService;
 
 
     @PostMapping("/registerSalonOwner")
@@ -51,9 +54,10 @@ public class WhyqController {
         }
         
         String email = session.getAttribute("ownerEmail").toString();
-        SalonOwner so = salonOwnerService.getByEmailId(email);
+        SalonOwnerDTO so = salonOwnerService.getSalonOwnerProfile(email);
         model.addAttribute("owner", so);
-        System.out.println(so);
+        session.setAttribute("ownerObj", so);
+        System.out.println(so.getServiceIds());
 //        session.setAttribute("salonOwner", so);
         
         return "ownerDashboard"; // Load Dashboard
@@ -82,8 +86,9 @@ public class WhyqController {
             return "redirect:/login"; // Redirect to login if session is missing
         }
     	String email = session.getAttribute("ownerEmail").toString();
-    	SalonOwner so = salonOwnerService.getByEmailId(email);
+    	SalonOwnerDTO so = salonOwnerService.getSalonOwnerProfile(email);
         model.addAttribute("owner", so);
+//        System.out.println(so.getServiceIds());
     	return "salonOwnerProfile";
     }
     
@@ -96,6 +101,17 @@ public class WhyqController {
     
     
     
+    @PostMapping("/updateProfile")
+    public String updateProfile(@ModelAttribute SalonOwnerDTO salonOwnerDTO, Model model, RedirectAttributes redirectAttributes,HttpSession session) {
+//        salonOwnerService.updateSalonOwner(salonOwnerDTO);
+//        model.addAttribute("message", "Profile updated successfully!");
+        redirectAttributes.addFlashAttribute("message", "Profile updated successfully!");
+        salonOwnerService.updateSalonOwner(salonOwnerDTO);
+        session.setAttribute("ownerName", salonOwnerDTO.getOwnerName());
+    	System.out.println(salonOwnerDTO);
+        return "redirect:/ownerProfile";
+    }
+    
 
     
     
@@ -104,7 +120,7 @@ public class WhyqController {
     public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model) {
     	
     	
-    	System.out.println("login post method invoked "+ loginDTO);
+//    	System.out.println("login post method invoked "+ loginDTO);
         if ("salonOwner".equals(loginDTO.getRole())) {
             // Salon Owner Login
         	System.out.println("login post method invoked");
@@ -115,12 +131,22 @@ public class WhyqController {
                 return "redirect:/dashboard"; // Redirect Salon Owner to Dashboard
             }
         } 
-//        else {
-//            // User Login (Implement User Authentication Later)
-//            return "redirect:/fetchSalon"; // Redirect User to Fetch Salon Page
-//        }
+        else {
+//             User Login (Implement User Authentication Later)
+        	System.out.println("Real login user");
+        	User user = userService.authenticateUser(loginDTO.getEmail(), loginDTO.getPassword());
+        	if(user!=null) {
+        		session.setAttribute("userEmail", loginDTO.getEmail());
+        		return "redirect:/fetchSalon";
 
+        	}
+        	
+
+            return "login"; // Redirect User to Fetch Salon Page
+        }
+        
         model.addAttribute("error", "Invalid email or password!");
+        System.out.println("LOGIN USER ELLE");
         return "login"; // Show login page with error
     }
     

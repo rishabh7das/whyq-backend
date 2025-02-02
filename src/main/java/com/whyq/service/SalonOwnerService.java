@@ -61,10 +61,60 @@ public class SalonOwnerService {
         return null; // Invalid credentials
     }
     
-    public SalonOwner getByEmailId(String email) {
-    	
-    	SalonOwner owner = salonOwnerRepository.findByEmail(email);
-    	
-    	return owner;
+//    public SalonOwner getByEmailId(String email) {
+//    	
+//    	SalonOwner owner = salonOwnerRepository.findByEmail(email);
+//    	
+//    	return owner;
+//    }
+    
+    public SalonOwnerDTO getSalonOwnerProfile(String email) {
+        SalonOwner salonOwner = salonOwnerRepository.findByEmail(email);
+
+        if (salonOwner == null) {
+            throw new RuntimeException("Salon owner not found!");
+        }
+
+        // Convert entity to DTO
+        SalonOwnerDTO dto = new SalonOwnerDTO();
+        dto.setEmail(salonOwner.getEmail());
+        dto.setOwnerName(salonOwner.getOwnerName());
+        dto.setSalonName(salonOwner.getSalonName());
+        dto.setContactNumber(salonOwner.getContactNumber());
+        dto.setAddress(salonOwner.getAddress());
+        dto.setPincode(salonOwner.getPincode());
+
+        // Extract service IDs
+        List<Long> serviceIds = salonOwner.getServices().stream()
+                                         .map(SalonService::getId)
+                                         .toList();
+        dto.setServiceIds(serviceIds);
+
+        return dto;
+    }
+    
+    
+    public void updateSalonOwner(SalonOwnerDTO salonOwnerDTO) {
+        SalonOwner existingOwner = salonOwnerRepository.findByEmail(salonOwnerDTO.getEmail());
+
+        if (existingOwner != null) {
+            existingOwner.setOwnerName(salonOwnerDTO.getOwnerName());
+            existingOwner.setSalonName(salonOwnerDTO.getSalonName());
+            existingOwner.setContactNumber(salonOwnerDTO.getContactNumber());
+            existingOwner.setAddress(salonOwnerDTO.getAddress());
+            existingOwner.setPincode(salonOwnerDTO.getPincode());
+
+            // Update selected services
+//            List<SalonService> updatedServices = serviceRepository.findAllById(salonOwnerDTO.getServiceIds());
+//            existingOwner.setServices(updatedServices);
+
+            salonOwnerRepository.save(existingOwner);
+        }
+    }
+    
+    
+    
+    public List<SalonOwner> getSalonsByPincode(String pincode) {
+        return salonOwnerRepository.findByPincode(pincode);
     }
 }

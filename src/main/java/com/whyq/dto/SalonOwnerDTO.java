@@ -81,4 +81,13 @@ public class SalonOwnerDTO {
 		this.serviceIds = serviceIds;
 	}
 
+	@Override
+	public String toString() {
+		return "SalonOwnerDTO [email=" + email + ", ownerName=" + ownerName + ", salonName=" + salonName
+				+ ", contactNumber=" + contactNumber + ", address=" + address + ", pincode=" + pincode + ", serviceIds="
+				+ serviceIds + "]";
+	}
+	
+	
+
 }

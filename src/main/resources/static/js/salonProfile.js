@@ -1,5 +1,19 @@
 $(document).ready(function () {
-    let selectedServices = ["Haircut", "Facial"]; // Replace with backend data
+	
+	
+	
+	if ($('#successMessage').text().trim() !== '') {
+	        $('#successMessage').removeClass('d-none');
+	        setTimeout(() => {
+	            $('#successMessage').fadeOut(); // Hide message after 3 seconds
+	        }, 3000);
+	    }
+	
+	
+	
+	
+	
+    //let selectedServices = ["Haircut", "Facial"]; // Replace with backend data
 
     // Enable editing of fields
     $("#editButton").click(function () {
@@ -122,7 +136,7 @@ $(document).ready(function () {
         valid &= validateServices();
 
         if (!valid) return;
-
+		
         // Disable fields after saving
         $("#profileForm input, #servicesDropdown, #addService").prop("disabled", true);
         $("#editButton").removeClass("d-none");
@@ -140,4 +154,13 @@ $(document).ready(function () {
             alert("Email does not match!");
         }
     });
+	
+	$('#saveButton').on('click', function () {
+	        // Enable all form fields before submission
+	        $('#profileForm input, #servicesDropdown').prop('disabled', false);
+			$("#successMessage").removeClass("d-none").text("Profile updated successfully!");
+	        // Submit the form programmatically
+	        document.getElementById('profileForm').submit();
+	    });
+	
 });

@@ -32,50 +32,52 @@
     <!-- Profile Section -->
     <div class="container mt-3 mb-5 flex-grow-1">
         <h2 class="text-center mb-4">Edit Profile</h2>
-        <p class="text-success text-center d-none" id="successMessage">Profile updated successfully!</p>
+        <!-- <p class="text-success text-center" id="successMessage">Profile updated successfully!</p> -->
+        <p class="text-success text-center" id="successMessage"  th:text="${message}"></p>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <form id="profileForm">
+                        <form id="profileForm" th:action="@{/updateProfile}" method="post">
                             <!-- Basic Details -->
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" th:value=${owner.ownerName} disabled>
+                                <input type="text" class="form-control" id="name" name="ownerName" th:value=${owner.ownerName} disabled>
                                 <small class="text-danger d-none" id="nameError">Name is required.</small>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" th:value=${owner.email} disabled>
+                                <input type="email" class="form-control" id="email" name="email" th:value=${owner.email} disabled>
                                 <small class="text-danger d-none" id="emailError">Please enter a valid email.</small>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="text" class="form-control" id="phone" th:value=${owner.contactNumber} disabled>
+                                <input type="text" class="form-control" id="phone" name="contactNumber" th:value=${owner.contactNumber} disabled>
                                 <small class="text-danger d-none" id="phoneError">Phone number must start with 6, 7, 8, or 9 and be 10 digits.</small>
                             </div>
 
                             <!-- Salon Details -->
-                            <div id="salonDetails">
+                            <div id="">
                                 <div class="form-group">
                                     <label for="salonName">Salon Name</label>
-                                    <input type="text" class="form-control" id="salonName" th:value=${owner.salonName} disabled>
+                                    <input type="text" class="form-control" id="salonName" name="salonName" th:value="' '+ ${owner.salonName}+ ' '" disabled>
                                     <small class="text-danger d-none" id="salonNameError">Salon Name is required.</small>
                                 </div>
+                               
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" th:value=${owner.address} disabled>
+                                    <input type="text" class="form-control" id="address" name="address"  th:value="' '+ ${owner.address}+ ' '"  disabled>
                                     <small class="text-danger d-none" id="addressError">Address is required.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="pincode">Pincode</label>
-                                    <input type="text" class="form-control" id="pincode" th:value=${owner.pincode} disabled>
+                                    <input type="text" class="form-control" id="pincode" name="pincode" th:value=${owner.pincode} disabled>
                                     <small class="text-danger d-none" id="pincodeError">Pincode must be 6 digits.</small>
                                 </div>
 
                                 <!-- Services Management -->
-                                <label>Services Offered</label>
-                                <div class="d-flex">
+                                <!-- <label>Services Offered</label> -->
+                                <div class="d-none">
                                     <select id="servicesDropdown" class="form-control mr-2" disabled>
                                         <option value="">Choose a service...</option>
                                         <option value="Haircut">Haircut</option>
@@ -94,8 +96,9 @@
                             </div>
 
                             <!-- Buttons -->
-                            <button type="button" class="btn btn-dark btn-block mt-3" id="editButton">Edit</button>
                             <button type="submit" class="btn btn-dark btn-block mt-3 d-none" id="saveButton">Save Changes</button>
+                            <button type="button" class="btn btn-dark btn-block mt-3" id="editButton">Edit</button>
+                            
                             <button type="button" class="btn btn-danger btn-block mt-3" id="deleteAccountButton">Delete Account</button>
                         </form>
                     </div>
