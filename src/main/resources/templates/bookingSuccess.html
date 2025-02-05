@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Success - Why_Q</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand fw-bold logo-bold" href="#">Why_Q</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link text-light" href="/fetchSalon">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="/myBookings">My Bookings</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="/Userprofile">Profile</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="/about" target="_blank">About</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Booking Success Card -->
+    <div class="container mt-5 col-lg-4 flex-grow-1 mb-5">
+        <h2 class="text-center mb-4">Booking Confirmed!</h2>
+        <div class="card shadow-sm mx-auto" style="max-width: 30rem;">
+            <div class="card-body">
+                <h5 class="card-title text-center"><i class="bi bi-shop"></i> 
+                    <span th:text="${salonName}"></span>
+                </h5>
+                <p class="card-text"><i class="bi bi-geo-alt"></i> Address: <span th:text="${salonAddress}"></span></p>
+                <p class="card-text"><i class="bi bi-scissors"></i> Service: <span th:text="${appointment.service.serviceName}"></span></p>
+                <p class="card-text"><i class="bi bi-calendar-event"></i> Date: <span th:text="${appointment.appointmentDate}"></span></p>
+                <p class="card-text"><i class="bi bi-clock"></i> Time: <span th:text="${appointment.appointmentTime}"></span></p>
+                <div class="d-flex justify-content-center">
+                    <a href="/fetchSalon" class="btn btn-dark mt-3"><i class="bi bi-arrow-left-circle"></i> Find More Salons</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-white text-center py-2">
+        <p>&copy; 2024 Why_Q. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

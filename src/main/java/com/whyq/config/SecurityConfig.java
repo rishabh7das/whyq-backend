@@ -18,7 +18,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // Disable CSRF for testing (Enable in production)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/registerSalonOwner", "/**", "/js/**").permitAll() // Allow unrestricted access
+                .requestMatchers("/login", "/registerSalonOwner","/bookAppointment/**", "/**", "/js/**").permitAll() // Allow unrestricted access
                 .requestMatchers("/").authenticated() // Require authentication for dashboard
                 .anyRequest().authenticated()
             )

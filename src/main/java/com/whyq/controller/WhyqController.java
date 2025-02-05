@@ -1,5 +1,7 @@
 package com.whyq.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whyq.dto.LoginDTO;
 import com.whyq.dto.SalonOwnerDTO;
+import com.whyq.entity.Appointment;
 import com.whyq.entity.SalonOwner;
+import com.whyq.entity.SalonService;
 import com.whyq.entity.User;
+import com.whyq.service.AppointmentService;
 import com.whyq.service.SalonOwnerService;
+import com.whyq.service.SalonsService;
 import com.whyq.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +33,12 @@ public class WhyqController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private AppointmentService appointmentService;
+
+    @Autowired
+    private SalonsService salonsService;
 
 
     @PostMapping("/registerSalonOwner")
@@ -53,6 +65,30 @@ public class WhyqController {
         if (session.getAttribute("ownerEmail") == null) {
             return "redirect:/login"; // Redirect to login if session is missing
         }
+        
+        
+        String ownerEmail = (String) session.getAttribute("ownerEmail");
+        List<Appointment> appointments = appointmentService.getUnservedAppointments(ownerEmail);
+        System.out.println("********"+appointments.isEmpty()+"********");
+//        System.out.println(appointments);
+        List<SalonService> services = salonsService.getServicesBySalonEmail(ownerEmail);
+        if(appointments.isEmpty()) {
+        	model.addAttribute("message","No Bookings Available");
+        }
+        model.addAttribute("appointments", appointments);
+        model.addAttribute("services", services);
+//        return "ownerDashboard";
+        
+//        for(Appointment a : appointments) {
+//        	if(a.getUserEmail() != null) {
+//        		String name = userService.getUserNameByEmail(a.getUserEmail());
+//        		a.setCustomerName(name);
+//        		System.out.println(a);
+//        		
+//        	}
+//        }
+        
+        System.out.println(appointments);
         
         String email = session.getAttribute("ownerEmail").toString();
         SalonOwnerDTO so = salonOwnerService.getSalonOwnerProfile(email);
@@ -168,6 +204,19 @@ public class WhyqController {
             return "redirect:/ownerProfile?error=Could not delete account"; // Stay on profile page with error message
         }
     }
+    
+    
+//    @GetMapping("/dashboard")
+//    public String ownerDashboard(Model model, HttpSession session) {
+//        String ownerEmail = (String) session.getAttribute("ownerEmail");
+//        List<Appointment> appointments = appointmentService.getUnservedAppointments(ownerEmail);
+//        System.out.println(appointments);
+//        List<SalonService> services = salonsService.getServicesBySalonEmail(ownerEmail);
+//
+//        model.addAttribute("appointments", appointments);
+//        model.addAttribute("services", services);
+//        return "ownerDashboard";
+//    }
     
     
     

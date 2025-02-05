@@ -2,6 +2,8 @@ package com.whyq.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import com.whyq.repository.ServiceRepository;
 
 @Service
 public class SalonOwnerService {
+	
+	private static final Logger log = LoggerFactory.getLogger(SalonOwnerService.class);
 
     @Autowired
     private SalonOwnerRepository salonOwnerRepository;
@@ -25,7 +29,7 @@ public class SalonOwnerService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public void registerSalonOwner(SalonOwnerDTO salonOwnerDTO) {
+    public SalonOwner registerSalonOwner(SalonOwnerDTO salonOwnerDTO) {
         if (salonOwnerRepository.existsById(salonOwnerDTO.getEmail())) {
             throw new RuntimeException("Salon owner with this email already exists!");
         }
@@ -43,6 +47,7 @@ public class SalonOwnerService {
         salonOwner.setServices(services);
 
         salonOwnerRepository.save(salonOwner);
+        return salonOwner;
     }
     
     
@@ -71,7 +76,7 @@ public class SalonOwnerService {
     
     public SalonOwnerDTO getSalonOwnerProfile(String email) {
         SalonOwner salonOwner = salonOwnerRepository.findByEmail(email);
-
+        
         if (salonOwner == null) {
             throw new RuntimeException("Salon owner not found!");
         }

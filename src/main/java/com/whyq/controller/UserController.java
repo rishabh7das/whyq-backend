@@ -2,6 +2,8 @@ package com.whyq.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +29,16 @@ public class UserController {
 	@Autowired
     private SalonOwnerService salonOwnerService;
 	
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@GetMapping("/registerUser")
 	public String registerUser(HttpSession session) {
 		session.invalidate();
 		
 		return "UserSignup";
 	}
+	
 	
 	
 	@PostMapping("/registerUser")
@@ -45,6 +51,7 @@ public class UserController {
 	        session.setAttribute("userName", userDTO.getName());
 
 	        redirectAttributes.addFlashAttribute("message", "User registered successfully!");
+	        
 	        return "redirect:/fetchSalon"; // Redirect user to search salons
 	    } catch (Exception e) {
 	        redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
@@ -57,7 +64,11 @@ public class UserController {
 	public String fetchSalon(HttpSession session) {
 		if(session.getAttribute("userEmail")==null) {
 			return "redirect:/login";
+			
 		}
+		
+		logger.info("User Logged In Successfully");
+		System.out.println(session.getAttribute("userEmail"));
 		return "fetchSalon";
 	}
 	
@@ -74,6 +85,7 @@ public class UserController {
 	@GetMapping("/Userlogout")
     public String logout(HttpSession session) {
         session.invalidate(); // Destroy session
+        logger.info("User Logged OUT Successfully");
         return "redirect:/login"; // Redirect to login page
     }
 }

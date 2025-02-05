@@ -1,0 +1,50 @@
+2025-02-03T11:30:39.887+05:30  INFO 29816 --- [whyq] [restartedMain] com.whyq.WhyqApplication                 : Starting WhyqApplication using Java 21.0.5 with PID 29816 (C:\Users\2376718\Documents\project\whyq\target\classes started by 2376718 in C:\Users\2376718\Documents\project\whyq)
+2025-02-03T11:30:39.887+05:30  INFO 29816 --- [whyq] [restartedMain] com.whyq.WhyqApplication                 : No active profile set, falling back to 1 default profile: "default"
+2025-02-03T11:30:40.296+05:30  INFO 29816 --- [whyq] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-03T11:30:40.320+05:30  INFO 29816 --- [whyq] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 3 JPA repository interfaces.
+2025-02-03T11:30:40.415+05:30  INFO 29816 --- [whyq] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 4001 (http)
+2025-02-03T11:30:40.417+05:30  INFO 29816 --- [whyq] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-03T11:30:40.417+05:30  INFO 29816 --- [whyq] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-03T11:30:40.440+05:30  INFO 29816 --- [whyq] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-03T11:30:40.440+05:30  INFO 29816 --- [whyq] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 551 ms
+2025-02-03T11:30:40.470+05:30  INFO 29816 --- [whyq] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-02-03T11:30:40.473+05:30  INFO 29816 --- [whyq] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-02-03T11:30:40.482+05:30  INFO 29816 --- [whyq] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-03T11:30:40.484+05:30  INFO 29816 --- [whyq] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2025-02-03T11:30:40.499+05:30  INFO 29816 --- [whyq] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7420115
+2025-02-03T11:30:40.499+05:30  INFO 29816 --- [whyq] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2025-02-03T11:30:40.501+05:30  WARN 29816 --- [whyq] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-02-03T11:30:40.502+05:30  INFO 29816 --- [whyq] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 8.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-02-03T11:30:40.585+05:30  INFO 29816 --- [whyq] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-02-03T11:30:40.602+05:30  INFO 29816 --- [whyq] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-03T11:30:40.662+05:30  WARN 29816 --- [whyq] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-03T11:30:40.667+05:30  WARN 29816 --- [whyq] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 11eeea23-3079-4abd-8e35-c7b1b93dc55d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-02-03T11:30:40.668+05:30  INFO 29816 --- [whyq] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-02-03T11:30:40.676+05:30  INFO 29816 --- [whyq] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-02-03T11:30:40.761+05:30  INFO 29816 --- [whyq] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-02-03T11:30:40.772+05:30  INFO 29816 --- [whyq] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 4001 (http) with context path '/'
+2025-02-03T11:30:40.775+05:30  INFO 29816 --- [whyq] [restartedMain] com.whyq.WhyqApplication                 : Started WhyqApplication in 0.943 seconds (process running for 2815.368)
+2025-02-03T11:30:40.777+05:30  INFO 29816 --- [whyq] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-02-03T11:30:56.511+05:30  INFO 29816 --- [whyq] [http-nio-4001-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-03T11:30:56.511+05:30  INFO 29816 --- [whyq] [http-nio-4001-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-02-03T11:30:56.513+05:30  INFO 29816 --- [whyq] [http-nio-4001-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-02-03T11:30:56.519+05:30  INFO 29816 --- [whyq] [http-nio-4001-exec-1] com.whyq.controller.UserController       : User Logged OUT Successfully
+2025-02-03T11:52:05.512+05:30  WARN 29816 --- [whyq] [HikariPool-3 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Thread starvation or clock leap detected (housekeeper delta=20m54s908ms37µs700ns).
+2025-02-03T11:53:51.849+05:30  INFO 29816 --- [whyq] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-02-03T11:53:51.855+05:30  INFO 29816 --- [whyq] [Thread-11] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-02-03T11:53:51.866+05:30  INFO 29816 --- [whyq] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-02-03T11:53:51.869+05:30  INFO 29816 --- [whyq] [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-02-03T11:53:51.871+05:30  INFO 29816 --- [whyq] [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2025-02-03T11:53:51.888+05:30  INFO 29816 --- [whyq] [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.

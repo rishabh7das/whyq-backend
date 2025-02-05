@@ -1,4 +1,3 @@
-<!-- <html xmlns:th="http://www.thymeleaf.org"> -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
@@ -6,33 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salon Owner Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand fw-bold logo-bold"  href="#">Why_Q</a>
-        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand fw-bold logo-bold" href="#">Why_Q</a>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <!-- <li class="nav-item">
-                    <a class="nav-link text-light" href="index.html">Home</a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="/ownerProfile">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="mailto:help@WhyQ.com">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="about.html" target="_blank">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="/logout">Logout</a>
-                </li>
-
+                <li class="nav-item"><a class="nav-link text-light" href="/ownerProfile">Profile</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="mailto:help@WhyQ.com">Contact</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="about.html" target="_blank">About</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="/logout">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -41,35 +29,63 @@
     <div class="container mt-5 flex-grow-1">
         <h2 class="text-center mb-4">Salon Queue Dashboard</h2>
         <h3>Hi, <span th:text="${session.ownerName}"></span> Welcome</h3>
+        
         <div class="row">
             <!-- Queue Summary -->
             <div class="col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title">Current Queue</h4>
-                        <p class="card-text">Total Customers in Queue: <strong id="queue-count">0</strong></p>
+                       <!--  <p class="card-text">Total Customers in Queue: <strong id="queue-count" th:text="${appointments.size()}">0</strong></p> -->
                         <ul class="list-group" id="queue-list">
-                            <!-- <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">Jane Smith</li>
-                            <li class="list-group-item">Michael Johnson</li> -->
+                    		<li th:if="${message}"  class="list-group-item">
+                    			<div  class="alert alert-primary" th:text="${message}" role="alert">
+								  
+								</div>
+                    		</li>
+                            <li th:each="appointment : ${appointments}" class="list-group-item d-flex justify-content-between align-items-center">
+                                <div><span> <strong th:text="'(#BID: '+${appointment.id}+') '">  </strong> </span>
+                                    <strong th:text="${appointment.customerName != null ? appointment.customerName : appointment.userEmail}"></strong> 
+                                    - <span th:text="${appointment.service.serviceName}"></span> 
+                                    (<span th:text="${appointment.appointmentDate}"></span> at <span th:text="${appointment.appointmentTime}"></span>)
+                                </div>
+                                <!-- <button class="btn btn-sm btn-success serve-button" th:data-id="${appointment.id}">Serve</button> -->
+                                <form th:action="@{/serveAppointment/{id}(id=${appointment.id})}" method="post">
+        <button type="submit" class="btn btn-sm btn-success">Serve</button>
+    </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- Manage Queue -->
-            <div class="col-md-6">
+            <div class="col-md-6 mb-5">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h4 class="card-title">Manage Queue</h4>
-                        <form id="add-to-queue-form" class="mb-3">
+                        <h4 class="card-title">Add Walk-in Customer</h4>
+                        <form id="walkinForm" method="post" action="/addWalkinCustomer">
                             <div class="form-group">
-                                <label for="customer-name">Add Walk-in Customer</label>
-                                <input type="text" class="form-control" id="customer-name" placeholder="Enter customer name" required>
+                                <label for="walkin-name">Customer Name</label>
+                                <input type="text" class="form-control" id="walkin-name" name="customerName" required>
                             </div>
-                            <button  type="submit" class="btn btn-dark btn-block">Add to Queue</button>
+                            <div class="form-group">
+                                <label for="walkin-service">Select Service</label>
+                                <select class="form-control" id="walkin-service" name="serviceId" required>
+                                	<option >Select service</option>
+                                    <option th:each="service : ${services}" th:value="${service.id}" th:text="${service.serviceName}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="walkin-date">Appointment Date</label>
+                                <input type="date" class="form-control" id="walkin-date" name="appointmentDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="walkin-time">Appointment Time</label>
+                                <input type="time" class="form-control" id="walkin-time" name="appointmentTime" required>
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-block">Add to Queue</button>
                         </form>
-                        <button class="btn btn-danger btn-block" id="serve-next">Serve Next Customer</button>
                     </div>
                 </div>
             </div>
@@ -77,16 +93,40 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer bg-dark text-white text-center py-2">
-        <p>&copy; 2024 Why_Q. All rights reserved.</p>
-    </footer>
+    <footer class="footer bg-dark text-white text-center py-2 mt-5">
+            <p>&copy; 2024 Why_Q. All rights reserved.</p>
+        </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/ownerDashboard.js">
-        // JavaScript for dynamic queue management
-        
+    <!-- JavaScript -->
+    <script>
+        $(document).ready(function () {
+            // Prevent selecting past dates
+            let today = new Date().toISOString().split("T")[0];
+            $("#walkin-date").attr("min", today);
+
+            // Prevent selecting past times for today
+            $("#walkin-date, #walkin-time").on("change", function () {
+                let selectedDate = $("#walkin-date").val();
+                let selectedTime = $("#walkin-time").val();
+                let now = new Date();
+                let currentTime = now.getHours() + ":" + now.getMinutes();
+
+                if (selectedDate === today && selectedTime < currentTime) {
+                    alert("Cannot select a past Date or Time.");
+                    $("#walkin-time").val("");
+                    $("#walkin-date").val("");
+                }
+            });
+
+            // Handle Serve Button Click
+            /* $(".serve-button").on("click", function () {
+                let appointmentId = $(this).attr("data-id");
+
+                $.post("/serveAppointment/" + appointmentId, function () {
+                    window.location.reload(true); // Forces a fresh reload from the server, not cache
+                });
+            }); */
+        });
     </script>
 </body>
 </html>
