@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,8 +26,16 @@
     </nav>
 
     <!-- Registration Form -->
+    <div th:if="${message}"  class="alert alert-danger mt-3" th:text="${message}" role="alert"></div>
     <div class="container mt-4">
+    
+    	<!-- <div th:if="${message}"  class="list-group-item">
+                    			<div  class="alert alert-primary" th:text="${message}" role="alert">
+								  
+								</div>
+        </div> -->
         <h2 class="text-center mb-4">Salon Owner Registration</h2>
+        
         <div id="successMessage" class="alert alert-success d-none">Registration successful!</div>
 
         <form id="salonOwnerForm" action="/registerSalonOwner" method="POST" class="p-4 border rounded bg-light">

@@ -64,7 +64,7 @@
             </div>
             <button type="submit" class="btn btn-dark btn-block mb-5">Confirm Appointment</button>
         </form> -->
-        <form action="/confirmBooking" method="post">
+        <form action="/confirmBooking" method="post"class="justify-content-center">
             <input type="hidden" name="salonEmail" th:value="${salonEmail}" />
             
             <label for="service">Select Service:</label>
@@ -78,7 +78,7 @@
             <label for="time">Time:</label>
             <input type="time" name="appointmentTime" required>
         <br>
-            <button type="submit">Confirm Booking</button>
+            <button type="submit" class="btn btn-dark mt-3">Confirm Booking</button>
         </form>
     </div>
 

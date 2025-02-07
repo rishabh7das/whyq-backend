@@ -42,7 +42,7 @@ public class WhyqController {
 
 
     @PostMapping("/registerSalonOwner")
-    public String registerSalonOwner(@ModelAttribute SalonOwnerDTO salonOwnerDTO,HttpSession session, Model model) {
+    public String registerSalonOwner(@ModelAttribute SalonOwnerDTO salonOwnerDTO,HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         try {
         	// saving the details
             salonOwnerService.registerSalonOwner(salonOwnerDTO);
@@ -55,9 +55,9 @@ public class WhyqController {
             model.addAttribute("message", "Salon Owner registered successfully!");
             return "redirect:/dashboard";
         } catch (RuntimeException e) {
-            model.addAttribute("message", "Error: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "Error: " + e.getMessage());
         }
-        return "registrationsuccess";
+        return "redirect:/registerSalonOwner";
     }
     
     @GetMapping("/dashboard")

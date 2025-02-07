@@ -19,7 +19,22 @@ public class AppointmentDTO {
     
     public String getSalonEmail() { return salonEmail; }
     
-    public String getCustomerName() {
+    public AppointmentDTO() {
+		
+	}
+
+	public AppointmentDTO(String salonEmail, Long serviceId, String userEmail, LocalDate appointmentDate,
+			LocalTime appointmentTime, String customerName) {
+		super();
+		this.salonEmail = salonEmail;
+		this.serviceId = serviceId;
+		this.userEmail = userEmail;
+		this.appointmentDate = appointmentDate;
+		this.appointmentTime = appointmentTime;
+		this.customerName = customerName;
+	}
+
+	public String getCustomerName() {
 		return customerName;
 	}
 	public void setCustomerName(String customerName) {

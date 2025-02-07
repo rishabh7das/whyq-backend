@@ -15,6 +15,22 @@ public class SalonOwnerDTO {
 	public SalonOwnerDTO() {
 
 	}
+	
+	
+
+public SalonOwnerDTO(String email, String ownerName, String salonName, String contactNumber, String address,
+			String pincode, String password) {
+		super();
+		this.email = email;
+		this.ownerName = ownerName;
+		this.salonName = salonName;
+		this.contactNumber = contactNumber;
+		this.address = address;
+		this.pincode = pincode;
+		this.password = password;
+	}
+
+
 
 // Getters & Setters
 	public String getEmail() {

@@ -7,6 +7,8 @@ import com.whyq.service.AppointmentService;
 import com.whyq.service.SalonsService;
 import jakarta.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Controller
 public class BookingController {
+	
+	private static final Logger log = LoggerFactory.getLogger(BookingController.class);
 
     @Autowired
     private AppointmentService appointmentService;
@@ -35,11 +39,9 @@ public class BookingController {
     public String confirmBooking(@ModelAttribute AppointmentDTO appointmentDTO, HttpSession session) {
         String userEmail = (String) session.getAttribute("userEmail");
         appointmentDTO.setUserEmail(userEmail);
-//        System.out.println(session.getAttribute("salonEmail").toString());
-        // Save the new booking and get the appointment object
-        
-        Appointment newAppointment = appointmentService.bookAppointment(appointmentDTO);
 
+        Appointment newAppointment = appointmentService.bookAppointment(appointmentDTO);
+        
         // Store the latest booking ID in session
         session.setAttribute("lastBookingId", newAppointment.getId());
 

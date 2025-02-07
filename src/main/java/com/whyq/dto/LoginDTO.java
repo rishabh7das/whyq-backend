@@ -7,11 +7,13 @@ public class LoginDTO {
     private String role; // "user" or "salonOwner"
 
     public LoginDTO() {}
+    
+    
 
-    public LoginDTO(String email, String password, String role) {
+    public LoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
-        this.role = role;
+        
     }
 
     public String getEmail() {

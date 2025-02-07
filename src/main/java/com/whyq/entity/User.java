@@ -13,6 +13,20 @@ public class User {
     private String name;
     private String password;
     private String phoneNumber;
+    
+    
+    
+    
+	public User() {
+		
+	}
+	public User(String email, String name, String password, String phoneNumber) {
+		super();
+		this.email = email;
+		this.name = name;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+	}
 	public String getEmail() {
 		return email;
 	}
