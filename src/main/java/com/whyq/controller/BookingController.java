@@ -29,7 +29,11 @@ public class BookingController {
 
     @GetMapping("/bookAppointment/{salonEmail}")
     public String bookAppointment(@PathVariable String salonEmail, Model model, HttpSession session) {
-        model.addAttribute("salonEmail", salonEmail);
+    	if(session.getAttribute("userEmail")==null) {
+			return "redirect:/login";
+			
+		}
+    	model.addAttribute("salonEmail", salonEmail);
         session.setAttribute("salonEmail", salonEmail);
         model.addAttribute("services", salonsService.getServicesBySalonEmail(salonEmail));
         return "appointmentBooking";
@@ -100,7 +104,7 @@ public class BookingController {
         return "myBookings";
     }
 
-    // NEW ENDPOINT: Mark Appointment as Served
+    // Mark Appointment as Served
     @PostMapping("/serveAppointment/{appointmentId}")
     public String serveAppointment(@PathVariable Long appointmentId) {
         appointmentService.serveAppointment(appointmentId);

@@ -1,83 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Bookings - Why_Q</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Bookings - Why_Q</title>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand fw-bold logo-bold" href="#">Why_Q</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link text-light" href="/fetchSalon">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-light" href="/ownerProfile">Profile</a></li>
-                <li class="nav-item"><a class="nav-link text-light" href="/logout">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand fw-bold logo-bold" href="#">Why_Q</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link text-light"
+					href="/fetchSalon">Home</a></li>
+				<li class="nav-item"><a class="nav-link text-light"
+					href="/userProfile">Profile</a></li>
+				<li class="nav-item"><a class="nav-link text-light"
+					href="/logout">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
 
-    <!-- My Bookings Section -->
-    <div class="container mt-3  flex-grow-1">
-        <h2 class="text-center mb-4">My Bookings</h2>
-        
-        <!-- Show Message if No Bookings -->
-        <p class="text-center text-muted" th:if="${#lists.isEmpty(appointments)}">No bookings found.</p>
+	<!-- My Bookings Section -->
+	<div class="container mt-3  flex-grow-1">
+		<h2 class="text-center mb-4">My Bookings</h2>
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="list-group">
-                    <!-- Loop through all bookings -->
-                    <div class="list-group-item list-group-item-action mb-3 shadow-sm" 
-                         th:each="appointment : ${appointments}">
-                        
-                        <h5 class="mb-1"><i class="bi bi-shop"></i> 
-                            <span th:text="${appointment.salonName}">Salon Name</span>
-                        </h5>
-                        <p class="mb-1"><i class="bi bi-geo-alt"></i> 
-                            <span th:text="${appointment.salonAddress}">123 Main Street</span>
-                        </p>
-                        <p class="mb-1"><i class="bi bi-scissors"></i> Service: 
-                            <span th:text="${appointment.service.serviceName}">Haircut</span>
-                        </p> 
-                        <p class="mb-1"><i class="bi bi-calendar-event"></i> Date: 
-                            <span th:text="${appointment.appointmentDate}">2024-06-01</span>
-                        </p>
-                        <p class="mb-1"><i class="bi bi-clock"></i> Time: 
-                            <span th:text="${appointment.appointmentTime}">10:30 AM</span>
-                        </p>
-                        <p class="mb-1 text-success" th:if="${appointment.served}">
-                            <i class="bi bi-check-circle"></i> Completed
-                        </p>
-                        
-                        <!-- Cancel Booking Button -->
-                        <form th:action="@{/deleteAppointment/{appointmentId}(appointmentId=${appointment.id})}" method="post" 
-                              th:if="${!appointment.served}"
-                              onsubmit="return confirm('Are you sure you want to cancel this booking?');">
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="bi bi-x-circle"></i> Cancel Booking
-                            </button>
-                        </form>
+		<!-- Show Message if No Bookings -->
+		<p class="text-center text-muted"
+			th:if="${#lists.isEmpty(appointments)}">No bookings found.</p>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="list-group">
+					<!-- Loop through all bookings -->
+					<div class="list-group-item list-group-item-action mb-3 shadow-sm"
+						th:each="appointment : ${appointments}">
 
-    <!-- Footer -->
-    <footer class="footer bg-dark text-white text-center py-2 mt-5">
-            <p>&copy; 2024 Why_Q. All rights reserved.</p>
-    </footer>
+						<h5 class="mb-1">
+							<i class="bi bi-shop"></i> <span
+								th:text="${appointment.salonName}">Salon Name</span>
+						</h5>
+						<p class="mb-1">
+							<i class="bi bi-geo-alt"></i> <span
+								th:text="${appointment.salonAddress}">123 Main Street</span>
+						</p>
+						<p class="mb-1">
+							<i class="bi bi-scissors"></i> Service: <span
+								th:text="${appointment.service.serviceName}">Haircut</span>
+						</p>
+						<p class="mb-1">
+							<i class="bi bi-calendar-event"></i> Date: <span
+								th:text="${appointment.appointmentDate}">2024-06-01</span>
+						</p>
+						<p class="mb-1">
+							<i class="bi bi-clock"></i> Time: <span
+								th:text="${appointment.appointmentTime}">10:30 AM</span>
+						</p>
+						<p class="mb-1 text-success" th:if="${appointment.served}">
+							<i class="bi bi-check-circle"></i> Completed
+						</p>
 
+						<!-- Cancel Booking Button -->
+						<form
+							th:action="@{/deleteAppointment/{appointmentId}(appointmentId=${appointment.id})}"
+							method="post" th:if="${!appointment.served}"
+							onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+							<button type="submit" class="btn btn-danger btn-sm">
+								<i class="bi bi-x-circle"></i> Cancel Booking
+							</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="footer bg-dark text-white text-center py-2 mt-5">
+		<p>&copy; 2024 Why_Q. All rights reserved.</p>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

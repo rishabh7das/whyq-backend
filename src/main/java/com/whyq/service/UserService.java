@@ -80,4 +80,60 @@ public class UserService {
             throw new RuntimeException("Error fetching username: " + e.getMessage());
         }
     }
+    
+    public UserDTO getUserByEmail(String email) {
+    	try {
+    		User user = userRepository.findByEmail(email);
+    		UserDTO userDTO = new UserDTO();
+    		userDTO.setEmail(user.getEmail());
+    		userDTO.setName(user.getName());
+    		userDTO.setPhoneNumber(user.getPhoneNumber());
+    		return userDTO;
+    	}catch(Exception e) {
+    		throw new RuntimeException("Error fetching profile: " + e.getMessage());
+    	} 	
+    }
+    
+    
+    public User updateUser(UserDTO userDTO) {
+    	try {
+    		
+    		User existingUser = userRepository.findByEmail(userDTO.getEmail());
+    		if(existingUser != null) {
+    			existingUser.setEmail(userDTO.getEmail());
+    			existingUser.setName(userDTO.getName());
+    			existingUser.setPhoneNumber(userDTO.getPhoneNumber());
+    			
+    			userRepository.save(existingUser);
+    		}else {
+    			throw new RuntimeException("User not found!"); 
+    		}
+    		
+    		return null;
+			
+		} catch (Exception e) {
+			throw new RuntimeException("Error updating profile: " + e.getMessage());
+		}
+    	
+    }
+    
+    
+    public boolean deleteUserByEmail(String email) {
+    	log.info("deleteUserByEmail() - Deleting User: {}", email);
+        try {
+            if (userRepository.existsById(email)) {
+            	userRepository.deleteById(email);
+                log.info("deleteUserByEmail() - User deleted successfully: {}", email);
+                return true;
+            } else {
+                log.warn("deleteUserByEmail() - No User found for: {}", email);
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("deleteUserByEmail() - Error deleting User: {}", e.getMessage());
+            throw new RuntimeException("Error deleting User: " + e.getMessage());
+        }
+    }
+    
+    
 }

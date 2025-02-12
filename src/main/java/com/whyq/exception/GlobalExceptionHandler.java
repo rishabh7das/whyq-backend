@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // Handle all uncaught exceptions
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleGeneralException(Exception ex, HttpServletRequest request, Model model) {
@@ -25,10 +25,10 @@ public class GlobalExceptionHandler {
 //        model.addAttribute("trace", ex.getStackTrace());
         model.addAttribute("errorURL", request.getRequestURL());
         
-        return "errorPage"; // Redirect to Thymeleaf error page
+        return "errorPage"; 
     }
 
-    // Handle specific RuntimeExceptions
+  
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleRuntimeException(RuntimeException ex, HttpServletRequest request, Model model) {
@@ -38,6 +38,6 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorMessage", ex.getMessage());
         model.addAttribute("errorURL", request.getRequestURL());
 
-        return "errorPage"; // Redirect to a generic error page
+        return "errorPage"; 
     }
 }

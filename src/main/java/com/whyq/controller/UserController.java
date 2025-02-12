@@ -76,7 +76,11 @@ public class UserController {
 	
 	
 	@PostMapping("/fetchSalon")
-	public String fetchSalonByPincode(@RequestParam("pincode") String pincode, Model model) {
+	public String fetchSalonByPincode(@RequestParam("pincode") String pincode, Model model, HttpSession session) {
+		if(session.getAttribute("userEmail")==null) {
+			return "redirect:/login";
+			
+		}
 	    List<SalonOwner> salons = salonOwnerService.getSalonsByPincode(pincode);
 	    model.addAttribute("salons", salons);
 	    System.out.println(salons);
@@ -90,4 +94,41 @@ public class UserController {
         logger.info("User Logged OUT Successfully");
         return "redirect:/login"; // Redirect to login page
     }
+	
+	@GetMapping("/userProfile")
+	public String userProfile(HttpSession session, Model model) {
+		if( session.getAttribute("userEmail")== null) {
+			return "redirect:/login";
+		}
+		
+		String userEmail = session.getAttribute("userEmail").toString();
+		UserDTO userDTO  = userService.getUserByEmail(userEmail);
+		System.out.println(userDTO);
+		model.addAttribute("user", userDTO);
+		
+		return "Userprofile";
+	}
+	
+	@PostMapping("/updateUserProfile")
+	public String updateUser(@ModelAttribute UserDTO userDTO, RedirectAttributes redirectAttributes) {
+//		System.out.println(userDTO);
+		userService.updateUser(userDTO);
+		redirectAttributes.addFlashAttribute("message" ,"Profile updated successfully!");
+		return "redirect:/userProfile";
+	}
+	
+	
+	@PostMapping("/deleteUser")
+	public String deleteUser(@RequestParam("email")String email, HttpSession session) {
+		 boolean deleted = userService.deleteUserByEmail(email);
+
+	        if (deleted) {
+	            session.invalidate(); // Clear session after deletion
+	            return "redirect:/login"; // Redirect to login after deletion
+	        } else {
+	            return "redirect:/userProfile?error=Could not delete account"; // Stay on profile page with error message
+	        }
+	}
+	
+	
 }

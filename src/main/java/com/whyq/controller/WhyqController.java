@@ -39,6 +39,12 @@ public class WhyqController {
 
     @Autowired
     private SalonsService salonsService;
+    
+    
+    @GetMapping("/")
+    public String indexPage() {
+    	return "index";
+    }
 
 
     @PostMapping("/registerSalonOwner")
@@ -70,23 +76,13 @@ public class WhyqController {
         String ownerEmail = (String) session.getAttribute("ownerEmail");
         List<Appointment> appointments = appointmentService.getUnservedAppointments(ownerEmail);
         System.out.println("********"+appointments.isEmpty()+"********");
-//        System.out.println(appointments);
+
         List<SalonService> services = salonsService.getServicesBySalonEmail(ownerEmail);
         if(appointments.isEmpty()) {
         	model.addAttribute("message","No Bookings Available");
         }
         model.addAttribute("appointments", appointments);
         model.addAttribute("services", services);
-//        return "ownerDashboard";
-        
-//        for(Appointment a : appointments) {
-//        	if(a.getUserEmail() != null) {
-//        		String name = userService.getUserNameByEmail(a.getUserEmail());
-//        		a.setCustomerName(name);
-//        		System.out.println(a);
-//        		
-//        	}
-//        }
         
         System.out.println(appointments);
         
@@ -145,7 +141,7 @@ public class WhyqController {
         redirectAttributes.addFlashAttribute("message", "Profile updated successfully!");
         salonOwnerService.updateSalonOwner(salonOwnerDTO);
         session.setAttribute("ownerName", salonOwnerDTO.getOwnerName());
-    	System.out.println(salonOwnerDTO);
+//    	System.out.println(salonOwnerDTO);
         return "redirect:/ownerProfile";
     }
     
@@ -157,7 +153,7 @@ public class WhyqController {
     public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model, RedirectAttributes ra) {
     	
     	
-//    	System.out.println("login post method invoked "+ loginDTO);
+
         if ("salonOwner".equals(loginDTO.getRole())) {
             // Salon Owner Login
         	System.out.println("login post method invoked");
@@ -181,10 +177,13 @@ public class WhyqController {
         		session.setAttribute("userEmail", loginDTO.getEmail());
         		return "redirect:/fetchSalon";
 
+        	}else {
+        		ra.addFlashAttribute("error", "Invalid Credentials");
+            	return "redirect:/login";
         	}
         	
 
-            return "login"; // Redirect User to Fetch Salon Page
+           // return "login"; // Redirect User to Fetch Salon Page
         }
         
 //        model.addAttribute("error", "Invalid email or password!");

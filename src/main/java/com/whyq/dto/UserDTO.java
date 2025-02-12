@@ -9,6 +9,9 @@ public class UserDTO {
 	
 	
 	
+	public UserDTO() {
+		super();
+	}
 	public UserDTO(String email, String name, String password, String phoneNumber) {
 		super();
 		this.email = email;

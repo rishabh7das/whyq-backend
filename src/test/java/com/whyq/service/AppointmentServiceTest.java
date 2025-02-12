@@ -24,7 +24,8 @@ class AppointmentServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
+    
+    
    
 
     @Test

@@ -23,13 +23,15 @@ document.getElementById("email").addEventListener("blur", function () {
     }
 });
 
-document.getElementById("password").addEventListener("blur", function () {
-    if (this.value.trim().length < 6) {
-        document.getElementById("passwordError").classList.remove("d-none");
+/*document.getElementById("password").addEventListener("blur", function () {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+    if (passwordPattern.test(this.value.trim())) {
+        document.getElementById("passwordError").classList.add("d-none"); // Hide the error message when the password is valid
     } else {
-        document.getElementById("passwordError").classList.add("d-none");
+        document.getElementById("passwordError").classList.remove("d-none"); // Show the error message when the password is invalid
     }
-});
+});*/
+
 
 // Validate form fields
 function validateForm() {
@@ -47,8 +49,8 @@ function validateForm() {
 
     // Validate Password
     const passwordField = document.getElementById("password"); 
-    //const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
-	const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z]){6,}$/; 
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+	//const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z]){6,}$/; 
     /*if (!passwordPattern.test(passwordField.value.trim())) 
         { document.getElementById("passwordError").classList.remove("d-none"); valid = false; } 
     else { document.getElementById("passwordError").classList.add("d-none");}
