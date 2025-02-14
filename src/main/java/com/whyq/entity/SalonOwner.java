@@ -12,8 +12,7 @@ public class SalonOwner {
 
     @Id
     @Column(nullable = false, unique = true)
-    private String email;  // 🔹 Email as Primary Key
-
+    private String email;  
     @Column(nullable = false)
     private String ownerName;
 
